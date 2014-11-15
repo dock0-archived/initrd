@@ -23,7 +23,6 @@ push:
 	git commit -am "$$(cat version)"
 	ssh -oStrictHostKeyChecking=no git@github.com &>/dev/null || true
 	git tag -f "$$(cat version)"
-	git push origin ":$$(cat version)" || true
 	git push --tags origin master
 	targit -a .github -c -f dock0/initrd $$(cat version) build/initrd.img
 	targit -a .github -c -f dock0/initrd latest build/initrd.img
