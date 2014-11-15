@@ -20,6 +20,7 @@ build:
 
 push:
 	@echo $$(sed -r 's/[0-9]+$$//' version)$$(($$(sed -r 's/.*\.//' version) + 1)) > version
+	git commit -am "$$(cat version)"
 	ssh -oStrictHostKeyChecking=no git@github.com &>/dev/null || true
 	git tag -f "$$(cat version)"
 	git push origin ":$$(cat version)" || true
