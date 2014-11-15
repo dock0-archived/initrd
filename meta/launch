@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+docker run \
+    --rm -t -i \
+    -v $SSH_AUTH_SOCK:/auth.sock \
+    -e SSH_AUTH_SOCK=/auth.sock \
+    -v $(pwd):/opt/initrd \
+    -v ~/.gitconfig:/etc/gitconfig \
+    initrd $1

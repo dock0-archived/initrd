@@ -1,0 +1,10 @@
+#!/bin/bash
+
+build() {
+    add_runscript
+
+    add_binary blockdev
+    add_binary losetup
+    add_binary mkfs.btrfs
+}
+
