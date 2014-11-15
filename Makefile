@@ -16,7 +16,7 @@ container: build_container
 build:
 	cp -R /opt/initrd/initcpio/* /usr/lib/initcpio/
 	mkdir -p build /lib/modules/kernel
-	mkinitcpio -c /dev/null -A base,udev,lvm2,dock0 -g build/initrd.img -k kernel
+	mkinitcpio -c /dev/null -A base,udev,lvm-dock0,dock0 -g build/initrd.img -k kernel
 
 push:
 	@echo $$(sed -r 's/[0-9]+$$//' version)$$(($$(sed -r 's/.*\.//' version) + 1)) > version
