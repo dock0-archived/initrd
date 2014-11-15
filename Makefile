@@ -25,7 +25,6 @@ push:
 	git tag -f "$$(cat version)"
 	git push --tags origin master
 	targit -a .github -c -f dock0/initrd $$(cat version) build/initrd.img
-	targit -a .github -c -f dock0/initrd latest build/initrd.img
 
 local: build push
 
