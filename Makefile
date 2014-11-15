@@ -19,7 +19,7 @@ build:
 	mkinitcpio -c /dev/null -A base,udev,lvm2,dock0 -g build/initrd.img -k kernel
 
 push:
-	@echo $(sed -r 's/[0-9]+$//' version)$(($(sed -r 's/.*\.//' version) + 1)) > version
+	@echo $$(sed -r 's/[0-9]+$$//' version)$$(($$(sed -r 's/.*\.//' version) + 1)) > version
 	ssh -oStrictHostKeyChecking=no git@github.com &>/dev/null || true
 	git tag -f "$$(cat version)"
 	git push origin ":$$(cat version)" || true
