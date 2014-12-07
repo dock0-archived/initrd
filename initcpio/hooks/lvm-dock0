@@ -4,7 +4,6 @@ run_earlyhook() {
     mkdir /run/lvm
     lvmetad
     lvm vgchange -ay
-    launch_interactive_shell
 }
 
 run_cleanuphook() {
