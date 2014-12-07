@@ -1,6 +1,3 @@
-FROM dock0/arch
+FROM dock0/build
 MAINTAINER akerl <me@lesaker.org>
-RUN pacman -S --needed --noconfirm ruby openssh mkinitcpio btrfs-progs lvm2 make
-RUN gem install --no-user-install --no-rdoc --no-ri targit
-WORKDIR /opt/initrd
-CMD ["make", "local"]
+RUN pacman -S --needed --noconfirm mkinitcpio btrfs-progs lvm2
