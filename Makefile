@@ -14,7 +14,7 @@ container: build_container
 	./meta/launch
 
 build:
-	cp -R /opt/initrd/initcpio/* /usr/lib/initcpio/
+	cp -R ./initcpio/* /usr/lib/initcpio/
 	mkdir -p build /lib/modules/kernel
 	mkinitcpio -c /dev/null -A base,udev,lvm-dock0,dock0 -g build/initrd.img -k kernel
 
