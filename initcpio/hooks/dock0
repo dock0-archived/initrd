@@ -48,12 +48,14 @@ run_hook() {
 
 dock0_mount_handler() {
     local newroot="${1}"
+    local base="/run/dock0/bootmnt"
 
-    _mnt_dev "${root}" "/run/dock0/bootmnt" "-w"
+    _mnt_dev "${root}" "${base}" "-w"
+    [ -e "${base}/configs/lvm" ] && lvm < "${base}/configs/lvm"
     mkfs.btrfs -f "${cow_dev}"
     _mnt_dev "${cow_dev}" "/run/dock0/cowspace" "-w"
-    _mnt_loop "/run/dock0/bootmnt/current/vm_root" "/run/dock0/sfs/"
+    _mnt_loop "${base}/current/vm_root" "/run/dock0/sfs/"
     _mnt_fs "/run/dock0/sfs/root.fs" "${newroot}" "/"
-    [ -d /run/dock0/bootmnt/config/templates/ ] && cp -R /run/dock0/bootmnt/config/templates/* ${newroot}
+    [ -d "${base}/config/templates" ] && cp -R ${base}/config/templates/* ${newroot}
 }
 

@@ -4,6 +4,8 @@ run_earlyhook() {
     mkdir /run/lvm
     lvmetad
     lvm vgchange -ay
+    lvm vgremove -f dock0
+    lvm vgcreate dock0 /dev/xvdc
 }
 
 run_cleanuphook() {
