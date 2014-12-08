@@ -54,6 +54,6 @@ dock0_mount_handler() {
     _mnt_dev "${cow_dev}" "/run/dock0/cowspace" "-w"
     _mnt_loop "/run/dock0/bootmnt/current/vm_root" "/run/dock0/sfs/"
     _mnt_fs "/run/dock0/sfs/root.fs" "${newroot}" "/"
-    launch_interactive_shell
+    [ -d /run/dock0/bootmnt/config/templates/ ] && cp -R /run/dock0/bootmnt/config/templates/* ${newroot}
 }
 
