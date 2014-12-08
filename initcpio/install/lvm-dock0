@@ -15,9 +15,3 @@ build() {
     add_runscript
 }
 
-help() {
-  cat <<HELPEOF
-This hook enables LVM2 volumes in initramfs.
-HELPEOF
-}
-

@@ -52,7 +52,6 @@ dock0_mount_handler() {
 
     _mnt_dev "${root}" "${base}" "-w"
     [ -e "${base}/configs/lvm" ] && lvm < "${base}/configs/lvm"
-    mkfs.btrfs -f "${cow_dev}"
     _mnt_dev "${cow_dev}" "/run/dock0/cowspace" "-w"
     _mnt_loop "${base}/current/vm_root" "/run/dock0/sfs/"
     _mnt_fs "/run/dock0/sfs/root.fs" "${newroot}" "/"
