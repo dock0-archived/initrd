@@ -49,7 +49,7 @@ run_hook() {
 dock0_mount_handler() {
     local newroot="${1}"
     local base="/run/dock0/bootmnt"
-
+    launch_interactive_shell
     _mnt_dev "${root}" "${base}" "-w"
     [ -e "${base}/configs/lvm" ] && lvm < "${base}/configs/lvm"
     _mnt_dev "${cow_dev}" "/run/dock0/cowspace" "-w"
