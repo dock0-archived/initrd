@@ -8,7 +8,7 @@ run_earlyhook() {
     lvm vgcreate dock0 /dev/xvdc
     lvm lvcreate -L 5G -Wn -n cowspace dock0
     lvm lvcreate -L 20G -Wn -n docker dock0
-    mkfs.btrfs -f /dev/dock0/cowland
+    mkfs.btrfs -f /dev/dock0/cowspace
     mkfs.btrfs -f /dev/dock0/docker
 }
 
