@@ -1,15 +1,34 @@
 #!/usr/bin/ash
 
+create_lv() {
+    local lv="$1"
+    local size="$2"
+    local vg="$3"
+    local fstype="$4"
+
+    dd if=/dev/urandom of="$lv.key" bs=4k count=1
+    lvm lvcreate -L "$size" -Wn -n "$lv" dock0
+    cryptsetup luksFormat --key-file="$lv.key" --batch-mode "/dev/$vg/$lv"
+    cryptsetup luksOpen --key-file="$lv.key" "/dev/$vg/$lv" "luks-$lv"
+    shred -u "$lv.key"
+
+    if [ -n "$fstype" ] ; then
+        mkfs -t "$fstype" -f "/dev/mapper/luks-$lv"
+    fi
+}
+
 run_earlyhook() {
+    local vg="dock0"
+
     mkdir /run/lvm
     lvmetad
+
     lvm vgchange -ay
-    lvm vgremove -f dock0
-    lvm vgcreate dock0 /dev/xvdc
-    lvm lvcreate -L 5G -Wn -n cowspace dock0
-    lvm lvcreate -L 20G -Wn -n docker dock0
-    mkfs.btrfs -f /dev/dock0/cowspace
-    mkfs.btrfs -f /dev/dock0/docker
+    lvm vgremove -f "$vg"
+    lvm vgcreate "$vg" /dev/xvdc
+
+    create_lv cowspace 5G "$vg" btrfs
+    create_lv docker 20G "$vg" btrfs
 }
 
 run_cleanuphook() {
