@@ -1,64 +1,35 @@
-_mnt_fs() {
-    local img="${1}"
-    local newroot="${2}"
-    local mnt="${3}"
-    local img_fullname="${img##*/}";
-    local dm_snap_name="${img_fullname%%.*}"
-    local ro_dev ro_dev_size rw_dev
-
-    ro_dev=$(losetup --find --show --read-only "${img}")
-    dev_size=$(blockdev --getsz ${ro_dev})
-
-    rm -f "/run/dock0/cowspace/root.cow"
-    dd of="/run/dock0/cowspace/root.cow" count=0 seek=${dev_size} &> /dev/null
-    rw_dev=$(losetup --find --show "/run/dock0/cowspace/root.cow")
-
-    echo "0 ${dev_size} snapshot ${ro_dev} ${rw_dev} N 8" | dmsetup create cow_root
-    _mnt_dev "/dev/mapper/cow_root" "${newroot}${mnt}" "-w"
-}
-
-_mnt_loop() {
-    local img="${1}"
-    local mnt="${2}"
-    local loop_dev
-
-    loop_dev=$(losetup --find --show --read-only "${img}")
-    _mnt_dev "${loop_dev}" "${mnt}" "-r"
-}
-
-_mnt_dev() {
-    local dev="${1}"
-    local mnt="${2}"
-    local flg="${3}"
-
-    msg ":: Mounting '${dev}' to '${mnt}'"
-
-    mkdir -p "${mnt}"
-    if mount "${flg}" "${dev}" "${mnt}"; then
-        msg ":: Device '${dev}' mounted successfully."
-    else
-        echo "ERROR; Failed to mount '${dev}'"
-        launch_interactive_shell
-    fi
-}
-
 run_hook() {
     mount_handler="dock0_mount_handler"
 }
 
 dock0_mount_handler() {
-    local newroot="${1}"
-    local base="/run/dock0/bootmnt"
+    local newroot="$1"
+
+    local root="${root:=/dev/xvda}"
+    local basepath="${basepath:=/run/dock0}"
+    local rootfspath="${rootfspath:=current/vm_root}"
+    local cowspace="${cowspace:=/dev/dock0/cowspace}"
+
+    local lower="lowerdir=$basepath/fs"
+    local upper="upperdir=$basepath/cowspace/upper"
+    local work="workdir=$basepath/cowspace/work"
 
     if [ -n "$fancy" ] ; then
         launch_interactive_shell
-    else
-        _mnt_dev "${root}" "${base}" "-w"
-        [ -e "${base}/configs/lvm" ] && lvm < "${base}/configs/lvm"
-        _mnt_dev "${cow_dev}" "/run/dock0/cowspace" "-w"
-        _mnt_loop "${base}/current/vm_root" "/run/dock0/sfs/"
-        _mnt_fs "/run/dock0/sfs/root.fs" "${newroot}" "/"
-        [ -d "${base}/config/templates" ] && cp -R ${base}/config/templates/* ${newroot}
+        return
+    fi
+
+    mkdir -p $basepath
+    ( cd $basepath ; mkdir -p bootmnt sfs fs cowspace)
+    mount $root $basepath/bootmnt
+    mount $basepath/bootmnt/$rootfspath $basepath/sfs
+    mount $basepath/sfs/root.fs $basepath/fs
+    mount $cowspace $basepath/cowspace
+    ( cd $basepath/cowspace ; mkdir -p upper work )
+    mount -t overlay overlay $newroot -o $lower,$upper,$work
+
+    if [ -d "${basepath}/bootmnt/config/templates" ] ; then
+        cp -R ${basepath}/bootmnt/config/templates/* ${newroot}
     fi
 }
 
