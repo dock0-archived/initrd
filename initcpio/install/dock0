@@ -5,6 +5,7 @@ build() {
 
     add_binary blockdev
     add_binary losetup
+    add_binary mkfs
     add_binary mkfs.btrfs
 }
 
