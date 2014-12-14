@@ -18,14 +18,15 @@ create_lv() {
 }
 
 run_earlyhook() {
-    local vg="dock0"
+    local vg="${vg:=dock0}"
+    local pv="${pv:=/dev/xvdb}"
 
     mkdir /run/lvm
     lvmetad
 
     lvm vgchange -ay
     lvm vgremove -f "$vg"
-    lvm vgcreate "$vg" /dev/xvdc
+    lvm vgcreate "$vg" "$pv"
 
     create_lv swap 128M "$vg"
     mkswap /dev/mapper/luks-swap
