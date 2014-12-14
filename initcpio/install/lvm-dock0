@@ -10,6 +10,8 @@ build() {
     add_binary "mkfs"
     add_binary "mkfs.btrfs"
     add_binary "mkfs.ext4"
+    add_binary "mkswap"
+    add_binary "swapon"
 
     add_file "/usr/lib/udev/rules.d/10-dm.rules"
     add_file "/usr/lib/udev/rules.d/13-dm-disk.rules"

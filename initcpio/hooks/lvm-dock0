@@ -13,7 +13,7 @@ create_lv() {
     shred -u "$lv.key"
 
     if [ -n "$fstype" ] ; then
-        mkfs -t "$fstype" -f "/dev/mapper/luks-$lv"
+        mkfs -t "$fstype" "/dev/mapper/luks-$lv"
     fi
 }
 
