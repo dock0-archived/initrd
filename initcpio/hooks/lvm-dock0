@@ -27,6 +27,10 @@ run_earlyhook() {
     lvm vgremove -f "$vg"
     lvm vgcreate "$vg" /dev/xvdc
 
+    create_lv swap 128M "$vg"
+    mkswap /dev/mapper/luks-swap
+    swapon /dev/mapper/swap
+
     create_lv cowspace 5G "$vg" ext4
     create_lv docker 20G "$vg" ext4
 }
