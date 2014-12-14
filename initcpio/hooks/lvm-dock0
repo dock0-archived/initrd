@@ -12,7 +12,10 @@ create_lv() {
     cryptsetup luksOpen --key-file="$lv.key" "/dev/$vg/$lv" "luks-$lv"
     shred -u "$lv.key"
 
-    if [ -n "$fstype" ] ; then
+    if [ "$fstype" == "swap" ] ; then
+        mkswap "/dev/mapper/luks-$lv"
+        swapon "/dev/mapper/luks-$lv"
+    elif [ -n "$fstype" ] ; then
         mkfs -t "$fstype" "/dev/mapper/luks-$lv"
     fi
 }
@@ -28,10 +31,7 @@ run_earlyhook() {
     lvm vgremove -f "$vg"
     lvm vgcreate "$vg" "$pv"
 
-    create_lv swap 128M "$vg"
-    mkswap /dev/mapper/luks-swap
-    swapon /dev/mapper/luks-swap
-
+    create_lv swap 128M "$vg" swap
     create_lv cowspace 5G "$vg" ext4
     create_lv docker 20G "$vg" ext4
 }
