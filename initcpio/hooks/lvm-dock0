@@ -30,7 +30,7 @@ run_earlyhook() {
 
     create_lv swap 128M "$vg"
     mkswap /dev/mapper/luks-swap
-    swapon /dev/mapper/swap
+    swapon /dev/mapper/luks-swap
 
     create_lv cowspace 5G "$vg" ext4
     create_lv docker 20G "$vg" ext4
