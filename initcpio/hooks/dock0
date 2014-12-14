@@ -7,7 +7,7 @@ dock0_mount_handler() {
 
     local root="${root:=/dev/xvda}"
     local basepath="${basepath:=/run/dock0}"
-    local rootfspath="${rootfspath:=current/vm_root}"
+    local rootfspath="${rootfspath:=latest/vm_root}"
     local cowspace="${cowspace:=/dev/mapper/luks-cowspace}"
 
     local lower="lowerdir=$basepath/fs"
