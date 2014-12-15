@@ -31,7 +31,5 @@ dock0_mount_handler() {
     if [ -d "${basepath}/bootmnt/config/templates" ] ; then
         cp -R ${basepath}/bootmnt/config/templates/* ${newroot}
     fi
-
-    switch_root "$newroot" /sbin/init
 }
 
