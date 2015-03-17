@@ -8,7 +8,6 @@ build() {
     add_binary "/usr/bin/shred"
 
     add_binary "mkfs"
-    add_binary "mkfs.btrfs"
     add_binary "mkfs.ext4"
     add_binary "mkswap"
     add_binary "swapon"
