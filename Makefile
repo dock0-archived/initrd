@@ -24,6 +24,7 @@ push:
 	ssh -oStrictHostKeyChecking=no git@github.com &>/dev/null || true
 	git tag -f "$$(cat version)"
 	git push --tags origin master
+	@sleep 3
 	targit -a .github -c -f dock0/initrd $$(cat version) build/initrd.img
 
 local: build push
