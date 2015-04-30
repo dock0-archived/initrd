@@ -3,7 +3,6 @@
 build() {
     add_binary "/usr/bin/lvm"
     add_binary "/usr/bin/lvmetad"
-    add_binary "/usr/bin/dmsetup"
     add_binary "/usr/bin/cryptsetup"
     add_binary "/usr/bin/shred"
 
