@@ -21,8 +21,14 @@ create_lv() {
 }
 
 run_earlyhook() {
+    if [ -e /dev/xvda ] ; then
+        local defaultpv="/dev/xvda"
+    else
+        local defaultpv="/dev/sda"
+    fi
+
     local vg="${vg:=dock0}"
-    local pv="${pv:=/dev/xvdb}"
+    local pv="${pv:=${defaultpv}}"
 
     mkdir /run/lvm
     lvmetad

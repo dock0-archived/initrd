@@ -5,7 +5,13 @@ run_hook() {
 dock0_mount_handler() {
     local newroot="$1"
 
-    local root="${root:=/dev/xvda}"
+    if [ -e /dev/xvda ] ; then
+        local defaultroot="/dev/xvda"
+    else
+        local defaultroot="/dev/sda"
+    fi
+
+    local root="${root:=${defaultroot}}"
     local basepath="${basepath:=/run/vm}"
     local rootfspath="${rootfspath:=latest/vm_root}"
     local cowspace="${cowspace:=/dev/mapper/luks-cowspace}"
