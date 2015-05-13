@@ -11,10 +11,10 @@ dock0_mount_handler() {
         local defaultroot="/dev/sda"
     fi
 
-    local root="${root:=${defaultroot}}"
-    local basepath="${basepath:=/run/vm}"
-    local rootfspath="${rootfspath:=latest/vm_root}"
-    local cowspace="${cowspace:=/dev/mapper/luks-cowspace}"
+    : ${root:=${defaultroot}}
+    : ${basepath:=/run/vm}
+    : ${rootfspath:=latest/vm_root}
+    : ${cowspace:=/dev/mapper/luks-cowspace}
 
     local lower="lowerdir=$basepath/fs"
     local upper="upperdir=$basepath/cowspace/upper"
