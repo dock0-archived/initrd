@@ -27,8 +27,8 @@ run_earlyhook() {
         local defaultpv="/dev/sdb"
     fi
 
-    local vg="${vg:=dock0}"
-    local pv="${pv:=${defaultpv}}"
+    : ${vg:=dock0}
+    : ${pv:=${defaultpv}}
 
     mkdir /run/lvm
     lvmetad
