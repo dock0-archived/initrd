@@ -22,9 +22,9 @@ create_lv() {
 
 run_earlyhook() {
     if [ -e /dev/xvda ] ; then
-        local defaultpv="/dev/xvda"
+        local defaultpv="/dev/xvdb"
     else
-        local defaultpv="/dev/sda"
+        local defaultpv="/dev/sdb"
     fi
 
     local vg="${vg:=dock0}"
