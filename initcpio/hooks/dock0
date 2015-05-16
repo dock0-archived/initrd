@@ -16,9 +16,13 @@ dock0_mount_handler() {
     : ${rootfspath:=latest/vm_root}
     : ${cowspace:=/dev/mapper/luks-cowspace}
 
-    local lower="lowerdir=$basepath/fs"
-    local upper="upperdir=$basepath/cowspace/upper"
-    local work="workdir=$basepath/cowspace/work"
+    local lower="${basepath}/fs"
+    local upper="${basepath}/cowspace/upper"
+    local work="${basepath}/cowspace/work"
+
+    if [ -d "${basepath}/bootmnt/config/templates" ] ; then
+        local lower="${basepath}/bootmnt/config/templates:${lower}"
+    fi
 
     if [ -n "$fancy" ] ; then
         launch_interactive_shell
@@ -32,10 +36,7 @@ dock0_mount_handler() {
     mount $basepath/sfs/root.fs $basepath/fs
     mount $cowspace $basepath/cowspace
     ( cd $basepath/cowspace ; mkdir -p upper work )
-    mount -t overlay overlay $newroot -o $lower,$upper,$work
-
-    if [ -d "${basepath}/bootmnt/config/templates" ] ; then
-        cp -R ${basepath}/bootmnt/config/templates/* ${newroot}
-    fi
+    local opts="lowerdir=${lower},upperdir=${upper},workdir=${$work}"
+    mount -t overlay overlay $newroot -o "$opts"
 }
 
