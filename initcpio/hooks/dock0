@@ -20,10 +20,6 @@ dock0_mount_handler() {
     local upper="${basepath}/cowspace/upper"
     local work="${basepath}/cowspace/work"
 
-    if [ -d "${basepath}/bootmnt/config/templates" ] ; then
-        local lower="${basepath}/bootmnt/config/templates:${lower}"
-    fi
-
     if [ -n "$fancy" ] ; then
         launch_interactive_shell
         return
@@ -36,6 +32,11 @@ dock0_mount_handler() {
     mount $basepath/sfs/root.fs $basepath/fs
     mount $cowspace $basepath/cowspace
     ( cd $basepath/cowspace ; mkdir -p upper work )
+
+    if [ -d "${basepath}/bootmnt/config/templates" ] ; then
+        local lower="${basepath}/bootmnt/config/templates:${lower}"
+    fi
+
     local opts="lowerdir=${lower},upperdir=${upper},workdir=${work}"
     mount -t overlay overlay $newroot -o "$opts"
 }
