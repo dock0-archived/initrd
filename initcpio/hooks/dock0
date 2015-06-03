@@ -36,7 +36,7 @@ dock0_mount_handler() {
     mount $basepath/sfs/root.fs $basepath/fs
     mount $cowspace $basepath/cowspace
     ( cd $basepath/cowspace ; mkdir -p upper work )
-    local opts="lowerdir=${lower},upperdir=${upper},workdir=${$work}"
+    local opts="lowerdir=${lower},upperdir=${upper},workdir=${work}"
     mount -t overlay overlay $newroot -o "$opts"
 }
 
