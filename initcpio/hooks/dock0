@@ -13,7 +13,7 @@ dock0_mount_handler() {
 
     : ${root:=${defaultroot}}
     : ${basepath:=/run/vm}
-    : ${rootfspath:=latest/vm_root}
+    : ${rootfspath:=latest/rootfs}
     : ${cowspace:=/dev/mapper/luks-cowspace}
 
     local lower="${basepath}/fs"
