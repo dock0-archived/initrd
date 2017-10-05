@@ -1,0 +1,29 @@
+name 'initrd'
+org 'dock0'
+
+source(
+  type: 'git',
+  path: '.'
+)
+
+build do
+  run 'cp /usr/bin/mkinitcpio ./'
+  run "sed -i 's|/etc/initcpio|$PWD/initcpio|' mkinitcpio"
+  modules = 'base,udev,lvm-dock0,dock0'
+  target = "#{releasedir}/initrd.dmg"
+  run "./mkinitcpio -z xz -c /dev/null -A #{modules} -g #{target} -k none"
+end
+
+package(
+  type: 'file',
+  artifacts: [
+    {
+      source: 'initrd.dmg',
+      name: 'initrd.dmg'
+    }
+  ]
+)
+
+test do
+  # TODO: add tests
+end

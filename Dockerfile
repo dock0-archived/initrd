@@ -1,3 +1,3 @@
-FROM dock0/build
+FROM dock0/pkgforge
 MAINTAINER akerl <me@lesaker.org>
 RUN pacman -S --needed --noconfirm mkinitcpio btrfs-progs lvm2 cryptsetup
