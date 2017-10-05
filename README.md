@@ -1,6 +1,8 @@
 initrd
 =======
 
+[![Build Status](https://img.shields.io/circleci/project/dock0/initrd/master.svg)](https://circleci.com/gh/dock0/initrd)
+[![GitHub release](https://img.shields.io/github/release/dock0/initrd.svg)](https://github.com/dock0/initrd/releases)
 [![MIT Licensed](http://img.shields.io/badge/license-MIT-green.svg)](https://tldrlegal.com/license/mit-license)
 
 Minimal initrd for bootstrapping my dock0 VMs
