@@ -1,9 +1,10 @@
 initrd
 =======
 
-[![Build Status](https://img.shields.io/travis/com/dock0/initrd.svg)](https://travis-ci.com/dock0/initrd)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/dock0/initrd/Build)](https://github.com/dock0/initrd/actions))
 [![GitHub release](https://img.shields.io/github/release/dock0/initrd.svg)](https://github.com/dock0/initrd/releases)
-[![MIT Licensed](http://img.shields.io/badge/license-MIT-green.svg)](https://tldrlegal.com/license/mit-license)
+[![License](https://img.shields.io/github/license/dock0/initrd)](https://github.com/dock0/initrd/blob/master/LICENSE)
+
 
 Minimal initrd for bootstrapping my dock0 VMs
 
